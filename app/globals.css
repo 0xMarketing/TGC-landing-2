@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/*
+ * Paleta del brandbook THEGRAFTCLVB (IDENTIDAD VISUAL, pág. 7):
+ * negro #000000 + blanco roto #f4f5f0 como colores principales y naranja
+ * #ff611a como único color de destaque. El azul #184b84 de la combinación
+ * "SS Special" no se usa en la landing.
+ * Se declara aquí como tokens @theme (formato nativo de Tailwind v4) porque
+ * usar @config para reenlazar el archivo .ts introduce una capa de
+ * compatibilidad JS que resultó extremadamente lenta con Turbopack en este
+ * entorno. tailwind.config.ts queda como espejo legible: si cambias la
+ * paleta, actualiza los dos sitios.
+ */
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #f4f5f0;
+  --color-muted: #8a8a8a;
+  --color-accent: #ff611a;
+  --font-sans: var(--font-heros), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-heros), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-serif-marca), "Times New Roman", serif;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+@layer base {
+  /* Brandbook, pág. 12: los títulos H2 van siempre 100% en mayúsculas. */
+  h2 {
+    text-transform: uppercase;
+  }
+}
+
+/* Evita el parpadeo del hero antes de que GSAP monte la entrada. */
+html.js [data-hero] {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-hero] {
+    visibility: visible;
+  }
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
